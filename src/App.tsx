@@ -1,35 +1,41 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// Import necessary modules
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import {Header} from "./components/header/Header.tsx";
+// import Header from '/components/header/Header.tsx'
+// Define the component
+// import Header from '/com'
 
 function App() {
-  const [count, setCount] = useState(0)
+    // State to store the JSON data
+    const [jsonData, setJsonData] = useState(null);
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    // Function to fetch JSON data from the file
+    useEffect(() => {
+        // Use axios to fetch data from the file
+        axios.get('../data.json') // Assuming file.json is in the same directory
+            .then(response => {
+                // Set the JSON data in state
+                setJsonData(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, []);
+
+    // Render the component
+    return (
+        <>
+            <Header />
+        </>
+        // <div>
+        //     <h1>JSON Data G</h1>
+        //     {/* Render the JSON data */}
+        //     {jsonData && (
+        //         <pre>{JSON.stringify(jsonData[0], null, 2)}</pre>
+        //     )}
+        // </div>
+
+    );
 }
-
 export default App
